@@ -2,6 +2,8 @@ pipeline {
     agent any
     
     parameters { 
+         string(name: 'region', defaultValue: 'us-east-2', description: 'AWS Region')
+         string(name: 'repo', defaultValue: '459966755614.dkr.ecr.us-east-2.amazonaws.com', description: 'ECR url')
          string(name: 'dev', defaultValue: 'ec2-18-217-163-36.us-east-2.compute.amazonaws.com', description: 'Development Server')
          string(name: 'stage', defaultValue: 'ec2-18-217-163-36.us-east-2.compute.amazonaws.com', description: 'Staging Server')
          string(name: 'prod', defaultValue: 'ec2-18-217-163-36.us-east-2.compute.amazonaws.com', description: 'Production Server')
@@ -12,23 +14,24 @@ pipeline {
      }
 
 stages{
-        stage('Build'){
+        stage('Build'){              // build docker images
             steps {
-                sh 'mvn clean package'
-            }
-            post {
-                success {
-                    echo 'Now Archiving...'
-                    archiveArtifacts artifacts: '**/target/*.war'
-                }
+                echo "Building images ... "
+
+                sh 'docker build -t mediawiki ./containerstuff/mediawiki'
+                sh 'docker build -t wikidb ./containerstuff/database/'
+
             }
         }
-
         stage ('Deployments'){
             parallel{
-                stage ('Deploy to Staging'){
+                stage ('Deploy to ECR'){     // deploy to aws registry
                     steps {
-                        sh "scp -v -i ~/Downloads/pub.pem -o StrictHostKeyChecking=no **/target/*.war ubuntu@${params.tomcat_dev}:/home/ubuntu/apache-tomcat-staging/webapps"
+                        sh "$(aws ecr get-login --no-include-email --region ${params.region})"
+                        sh "docker tag wikidb:latest ${params.repo}/wikidb:latest"
+                        sh "docker push ${params.repo}/wikidb:latest"
+                        sh "docker tag mediawiki:latest ${params.repo}/mediawiki:latest"
+                        sh "docker push ${params.repo}/mediawiki:latest"
                     }
                 }
 

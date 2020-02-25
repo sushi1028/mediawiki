@@ -1,0 +1,24 @@
+version: '3'
+services:
+  mediawiki:
+    build:
+      context: ./mediawiki
+      dockerfile: Dockerfile
+    image: mediawiki
+    restart: always
+    ports: 
+      - "80:80"
+    links:
+      - database
+    privileged: true
+    tty: true  
+  
+  wikidb:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    image: wikidb
+    restart: always
+
+
+

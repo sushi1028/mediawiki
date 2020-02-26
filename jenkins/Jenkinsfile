@@ -42,13 +42,13 @@ stages{
                         sh "kubectl apply -n dev -f ./k8s/wikidb/service.yaml"                        
                     }
                  }
-                stages {
+                stage {
                     stage('Input') {
                         steps {
                             input('Do you want to proceed?')
                         }
                     }
-            
+
                     stage('If Proceed is clicked') {
                         steps {
                             print('hello')

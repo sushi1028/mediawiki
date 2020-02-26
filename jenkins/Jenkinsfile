@@ -42,19 +42,27 @@ stages{
                         sh "kubectl apply -n dev -f ./k8s/wikidb/service.yaml"                        
                     }
                  }
-                stage {
-                    stage('Input') {
-                        steps {
-                            input('Do you want to proceed?')
-                        }
-                    }
 
-                    stage('If Proceed is clicked') {
-                        steps {
-                            print('hello')
+                stage ("Deploy to Staging"){
+                    steps {
+                        script{
+                            input "do you want to proceed ?"
+                            sh "kubectl apply -n stage -f ./k8s/mediawiki/deployment.yaml"
+                            sh "kubectl apply -n stage -f ./k8s/mediawiki/service.yaml"
+                            sh "kubectl apply -n stage -f ./k8s/wikidb/deployment.yaml"
+                            sh "kubectl apply -n stage -f ./k8s/wikidb/service.yaml"
                         }
+                    } 
                     }
-                }
+                
+                // stage ("Deploy to Staging"){
+                //     steps {
+                //         sh "kubectl apply -n stage -f ./k8s/mediawiki/deployment.yaml"
+                //         sh "kubectl apply -n stage -f ./k8s/mediawiki/service.yaml"
+                //         sh "kubectl apply -n stage -f ./k8s/wikidb/deployment.yaml"
+                //         sh "kubectl apply -n stage -f ./k8s/wikidb/service.yaml"
+                //     }
+                // }
                 // stage ("Deploy to Prod"){
                 //     steps {
                 //         sh "kubectl apply -n prod -f ./k8s/mediawiki/deployment.yaml"

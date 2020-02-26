@@ -59,10 +59,10 @@ stages{
                     steps {
                         script{
                             input "Do you want to proceed ?"
-                            sh "kubectl apply -n stage -f ./k8s/mediawiki/deployment.yaml"
-                            sh "kubectl apply -n stage -f ./k8s/mediawiki/service.yaml"
-                            sh "kubectl apply -n stage -f ./k8s/wikidb/deployment.yaml"
-                            sh "kubectl apply -n stage -f ./k8s/wikidb/service.yaml"
+                            sh "kubectl apply -n prod -f ./k8s/mediawiki/deployment.yaml"
+                            sh "kubectl apply -n prod -f ./k8s/mediawiki/service.yaml"
+                            sh "kubectl apply -n prod -f ./k8s/wikidb/deployment.yaml"
+                            sh "kubectl apply -n prod -f ./k8s/wikidb/service.yaml"
                         }
                     }
                 }

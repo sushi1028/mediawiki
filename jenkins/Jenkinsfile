@@ -7,9 +7,9 @@ pipeline {
 
     } 
 
-    triggers {
-         pollSCM('* * * * *') // Polling Source Control
-     }
+    // triggers {
+    //      pollSCM('* * * * *') // Polling Source Control
+    //  }
 
 stages{
         stage('Build'){              // build docker images

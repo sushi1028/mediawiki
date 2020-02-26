@@ -21,7 +21,7 @@ stages{
 
             }
         }
-        stage ('Deployments'){
+        stages ('Deployments'){
             parallel{
                 stage ('Deploy to ECR'){     // deploy to aws registry
                     steps {

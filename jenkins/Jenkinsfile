@@ -21,7 +21,7 @@ stages{
 
             }
         }
-        stages ('Deployments'){
+        stage ('Deployments'){
             parallel{
                 stage ('Deploy to ECR'){     // deploy to aws registry
                     steps {
@@ -40,7 +40,7 @@ stages{
                         sh "kubectl apply -n dev -f k8s/wikidb/deployment.yaml"
                         sh "kubectl apply -n dev -f k8s/wikidb/service.yaml"                        
                     }
-
+                }
                 stage ("Deploy to Staging"){
                     steps {
                         sh "kubectl apply -n stage -f k8s/mediawiki/deployment.yaml"
@@ -48,7 +48,7 @@ stages{
                         sh "kubectl apply -n stage -f k8s/wikidb/deployment.yaml"
                         sh "kubectl apply -n stage -f k8s/wikidb/service.yaml"
                     }
-
+                }
                 stage ("Deploy to Prod"){
                     steps {
                         sh "kubectl apply -n prod -f k8s/mediawiki/deployment.yaml"
@@ -60,4 +60,4 @@ stages{
             }
         }
     }
-}}}
+}

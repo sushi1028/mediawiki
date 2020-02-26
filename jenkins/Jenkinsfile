@@ -25,7 +25,7 @@ stages{
             parallel{
                 stage ('Deploy to ECR'){     // deploy to aws registry
                     steps {
-                        sh "$(aws ecr get-login --no-include-email --region ${params.region})"
+                        sh "\$(aws ecr get-login --no-include-email --region ${params.region})"
                         sh "docker tag wikidb:latest ${params.repo}/wikidb:latest"
                         sh "docker push ${params.repo}/wikidb:latest"
                         sh "docker tag mediawiki:latest ${params.repo}/mediawiki:latest"

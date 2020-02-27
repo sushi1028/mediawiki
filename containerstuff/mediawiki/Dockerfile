@@ -14,16 +14,17 @@ RUN apt install -y apache2 \
 RUN apt install -y software-properties-common wget tar systemd && \
     service apache2  start 
 
-RUN cd /tmp && \
-    wget https://releases.wikimedia.org/mediawiki/1.34/mediawiki-1.34.0.tar.gz && \
-    mkdir /var/lib/mediawiki && \
-    tar -xvzf /tmp/mediawiki-*.tar.gz && \
+WORKDIR /tmp
+
+RUN wget https://releases.wikimedia.org/mediawiki/1.34/mediawiki-1.34.0.tar.gz
+
+WORKDIR  /var/lib/mediawiki
+
+RUN tar -xvzf /tmp/mediawiki-1.34.0.tar.gz && \
     mv mediawiki-*/* /var/lib/mediawiki
 
-RUN ln -s /var/lib/mediawiki /var/www/html/mediawiki 
+RUN ln -s /var/lib/mediawiki /var/www/html/mediawiki
 
 EXPOSE 80
 
 CMD [ "apachectl", "-D", "FOREGROUND" ]
-
-ENTRYPOINT [ "bash" ]

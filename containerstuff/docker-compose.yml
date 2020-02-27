@@ -9,7 +9,7 @@ services:
     ports: 
       - "80:80"
     links:
-      - database
+      - wikidb
     privileged: true
     tty: true  
   
@@ -19,6 +19,7 @@ services:
       dockerfile: Dockerfile
     image: wikidb
     restart: always
+
 
 
 

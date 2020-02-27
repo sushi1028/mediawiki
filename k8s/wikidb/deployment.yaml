@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: wikidb
-  replicas: 1 # tells deployment to run 2 pods matching the template
+  replicas: 2 # tells deployment to run 2 pods matching the template
   template:
     metadata:
       labels:
@@ -17,3 +17,10 @@ spec:
         image: 459966755614.dkr.ecr.us-east-2.amazonaws.com/wikidb
         ports:
         - containerPort: 3306
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: wikidb-persistent-volume

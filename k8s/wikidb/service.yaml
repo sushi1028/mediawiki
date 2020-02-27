@@ -10,3 +10,8 @@ spec:
     - protocol: TCP
       port: 3306
       targetPort: 3306
+      
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: wikidb-persistent-volume

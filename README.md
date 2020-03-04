@@ -1,6 +1,6 @@
-**Command to expose the container**
+***Command to expose the container**
 kubectl expose deployment mediawiki --type=LoadBalancer --name=my-service
-
+****
 **MySQL Variables**
 MYSQL_DATABASE mediawiki
 MYSQL_USER coditas

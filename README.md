@@ -5,7 +5,7 @@ This Project Deploy Mediawiki Statefulset Application to K8s using Jenkins CI/CD
 
 ## Docker
 
-1. The folder, **containerstuff** contains mediawiki, database Dockerfiles, which will be used to containerize the application.
+1. The folder, **docker** contains mediawiki, database Dockerfiles, which will be used to containerize the application.
 2. For local testing for Docker, we are using docker-compose.
 
 ## Jenkins
